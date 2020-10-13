@@ -152,26 +152,27 @@ final class FileStore {
 				}
 			});
 
-		messageDispatcher.set(
-			ClearCacheMessage.class,
-			new AbstractHandler<ClearCacheMessage>() {
-				public void handle(ClearCacheMessage message)
-					throws CommunicationException {
-
-					m_logger.info("Clearing file store");
-
-					try {
-						synchronized (m_incomingDirectory) {
-							m_incomingDirectory.deleteContents();
-							m_incremental = false;
-						}
-					}
-					catch (Directory.DirectoryException e) {
-						m_logger.error(e.getMessage());
-						throw new CommunicationException(e.getMessage(), e);
-					}
-				}
-			});
+		// Ignore clear cache message.
+//		messageDispatcher.set(
+//			ClearCacheMessage.class,
+//			new AbstractHandler<ClearCacheMessage>() {
+//				public void handle(ClearCacheMessage message)
+//					throws CommunicationException {
+//
+//					m_logger.info("Clearing file store");
+//
+//					try {
+//						synchronized (m_incomingDirectory) {
+//							m_incomingDirectory.deleteContents();
+//							m_incremental = false;
+//						}
+//					}
+//					catch (Directory.DirectoryException e) {
+//						m_logger.error(e.getMessage());
+//						throw new CommunicationException(e.getMessage(), e);
+//					}
+//				}
+//			});
 
 		messageDispatcher.set(
 			DistributeFileMessage.class,
