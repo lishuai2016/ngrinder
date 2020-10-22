@@ -21,7 +21,6 @@ import lombok.Setter;
 import net.grinder.common.GrinderProperties;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.hibernate.annotations.Index;
 import org.hibernate.annotations.SortNatural;
 import org.hibernate.annotations.Type;
 import org.ngrinder.common.util.DateUtils;
@@ -94,7 +93,6 @@ public class PerfTest extends BaseModel<PerfTest> {
 
 	/** the scheduled time of this test. */
 	@Column(name = "scheduled_time")
-	@Index(name = "scheduled_time_index")
 	private Date scheduledTime;
 
 	/** the start time of this test. */
