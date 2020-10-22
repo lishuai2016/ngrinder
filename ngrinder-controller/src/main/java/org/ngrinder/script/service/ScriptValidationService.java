@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -9,7 +9,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ngrinder.script.service;
 
@@ -37,6 +37,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.util.List;
 
+import static java.nio.charset.Charset.defaultCharset;
 import static org.ngrinder.common.constant.ControllerConstants.PROP_CONTROLLER_VALIDATION_SYNTAX_CHECK;
 import static org.ngrinder.common.constant.ControllerConstants.PROP_CONTROLLER_VALIDATION_TIMEOUT;
 import static org.ngrinder.common.util.ExceptionUtils.processException;
@@ -65,7 +66,7 @@ public class ScriptValidationService extends AbstractScriptValidationService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.ngrinder.script.service.IScriptValidationService#validate(org
 	 * .ngrinder.model.User, org.ngrinder.model.IFileEntry, boolean,
@@ -110,7 +111,7 @@ public class ScriptValidationService extends AbstractScriptValidationService {
 			}
 			File doValidate = localScriptTestDriveService.doValidate(scriptDirectory, scriptFile, new Condition(),
 					config.isSecurityEnabled(), config.getSecurityLevel(), hostString, getTimeout());
-			List<String> readLines = FileUtils.readLines(doValidate);
+			List<String> readLines = FileUtils.readLines(doValidate, defaultCharset());
 			StringBuilder output = new StringBuilder();
 			File homeDirectory = config.getHome().getDirectory();
 			String absolutePath = homeDirectory.getAbsolutePath();
