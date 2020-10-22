@@ -28,7 +28,6 @@ import java.util.Date;
 import java.util.Set;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
-import static org.ngrinder.common.util.AccessUtils.getSafe;
 import static org.ngrinder.common.util.CollectionUtils.newHashSet;
 
 /**

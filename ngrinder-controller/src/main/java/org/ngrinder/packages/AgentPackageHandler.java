@@ -2,8 +2,6 @@ package org.ngrinder.packages;
 
 import org.apache.commons.lang.StringUtils;
 import org.ngrinder.infra.schedule.ScheduledTaskService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +14,6 @@ import static org.ngrinder.common.util.CollectionUtils.newHashMap;
 
 @Component("agentPackageHandler")
 public class AgentPackageHandler extends PackageHandler {
-
-	private Logger LOGGER = LoggerFactory.getLogger(AgentPackageHandler.class);
 
 	@Autowired
 	private ScheduledTaskService scheduledTaskService;

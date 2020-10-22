@@ -36,21 +36,21 @@ public class BaseModel<M> extends BaseEntity<M> {
 
 	private static final long serialVersionUID = -3876339828833595694L;
 
-	@Column(name = "created_date", insertable = true, updatable = false)
+	@Column(name = "created_date", updatable = false)
 	private Date createdDate;
 
 	@JsonSerialize(using = User.UserReferenceSerializer.class)
 	@ManyToOne
-	@JoinColumn(name = "created_user", insertable = true, updatable = false)
+	@JoinColumn(name = "created_user", updatable = false)
 	@NotFound(action = NotFoundAction.IGNORE)
 	private User createdUser;
 
-	@Column(name = "last_modified_date", insertable = true, updatable = true)
+	@Column(name = "last_modified_date")
 	private Date lastModifiedDate;
 
 	@JsonSerialize(using = User.UserReferenceSerializer.class)
 	@ManyToOne
-	@JoinColumn(name = "last_modified_user", insertable = true, updatable = true)
+	@JoinColumn(name = "last_modified_user")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private User lastModifiedUser;
 

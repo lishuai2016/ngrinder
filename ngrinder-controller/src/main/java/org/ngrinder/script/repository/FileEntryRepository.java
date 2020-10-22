@@ -15,7 +15,6 @@ package org.ngrinder.script.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.lang.StringUtils;
 import org.ngrinder.common.exception.NGrinderRuntimeException;
@@ -26,7 +25,6 @@ import org.ngrinder.model.User;
 import org.ngrinder.script.model.FileCategory;
 import org.ngrinder.script.model.FileEntry;
 import org.ngrinder.script.model.FileType;
-import org.ngrinder.user.repository.UserRepository;
 import org.ngrinder.user.service.UserContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -248,10 +246,8 @@ public class FileEntryRepository {
 				String autoDetectedEncoding = EncodingUtils.detectEncoding(byteArray, "UTF-8");
 				script.setContent((new String(byteArray, autoDetectedEncoding)).replaceAll("&quot;","\""));
 				script.setEncoding(autoDetectedEncoding);
-				script.setContentBytes(byteArray);
-			} else {
-				script.setContentBytes(byteArray);
 			}
+			script.setContentBytes(byteArray);
 			script.setDescription(info.getCommitMessage());
 			script.setRevision(revisionNumber);
 			script.setLastRevision(lastRevisionNumber);
@@ -395,10 +391,7 @@ public class FileEntryRepository {
 			while (true) {
 				editor.closeDir();
 			}
-		} catch (EmptyStackException e) {
-			// FALL THROUGH
-			noOp();
-		} catch (SVNException e) {
+		} catch (EmptyStackException | SVNException e) {
 			// FALL THROUGH
 			noOp();
 		} finally {

@@ -1,4 +1,4 @@
-/* 
+/*
  * Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -9,7 +9,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 package org.ngrinder.script.controller;
 
@@ -107,13 +107,10 @@ public class SvnDavController implements HttpRequestHandler, ServletConfig, Serv
 	 *
 	 * @param request  request
 	 * @param response response
-	 * @throws ServletException occurs when servlet has a problem.
 	 * @throws IOException      occurs when file system has a problem.
 	 */
 	@Override
-	public void handleRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException,
-			IOException {
+	public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		if (LOGGER.isTraceEnabled()) {
 			logRequest(request);

@@ -137,7 +137,7 @@ public class UserApiController {
 	@GetMapping({"/list", "/list/"})
 	@PreAuthorize("hasAnyRole('A')")
 	public Page<User> getAll(@RequestParam(required = false) Role role,
-							 @PageableDefault(page = 0, size = 10) Pageable pageable,
+							 @PageableDefault Pageable pageable,
 							 @RequestParam(required = false) String keywords) {
 		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), defaultIfNull(pageable.getSort(), DEFAULT_SORT));
 		Pageable defaultPageable = PageRequest.of(0, pageable.getPageSize(), defaultIfNull(pageable.getSort(), DEFAULT_SORT));
@@ -280,7 +280,6 @@ public class UserApiController {
 	 * Delete the user by the given userId.
 	 *
 	 * @param userId user id
-	 * @return json message
 	 */
 	@DeleteMapping("/{userId}")
 	@PreAuthorize("hasAnyRole('A')")

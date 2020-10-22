@@ -22,7 +22,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.ngrinder.common.util.PathUtils;
 import org.ngrinder.model.BaseModel;
 import org.ngrinder.model.IFileEntry;
 

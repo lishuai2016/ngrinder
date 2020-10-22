@@ -73,7 +73,6 @@ import static org.ngrinder.agent.model.AgentRequest.RequestType.UPDATE_AGENT;
 import static org.ngrinder.common.constant.CacheConstants.*;
 import static org.ngrinder.common.constant.ControllerConstants.PROP_CONTROLLER_ENABLE_AGENT_AUTO_APPROVAL;
 import static org.ngrinder.common.util.CollectionUtils.newHashMap;
-import static org.ngrinder.common.util.ExceptionUtils.processException;
 import static org.ngrinder.common.util.TypeConvertUtils.cast;
 
 /**
