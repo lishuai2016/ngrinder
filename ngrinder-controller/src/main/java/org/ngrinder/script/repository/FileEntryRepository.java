@@ -130,29 +130,25 @@ public class FileEntryRepository {
 		SVNClientManager svnClientManager = getSVNClientManager();
 		try {
 			svnClientManager.getLogClient().doList(SVNURL.fromFile(getUserRepoDirectory(user)).appendPath(path, true),
-					svnRevision, svnRevision, true, recursive, new ISVNDirEntryHandler() {
-				@Override
-				public void handleDirEntry(SVNDirEntry dirEntry) throws SVNException {
-
-					FileEntry script = new FileEntry();
-					// Exclude base path "/"
-					if (StringUtils.isBlank(dirEntry.getRelativePath())) {
-						return;
-					}
-					script.setPath(FilenameUtils.normalize(path + "/" + dirEntry.getRelativePath(), true));
-					script.setCreatedDate(dirEntry.getDate());
-					script.setLastModifiedDate(dirEntry.getDate());
-					script.setDescription(dirEntry.getCommitMessage());
-					script.setRevision(dirEntry.getRevision());
-					if (dirEntry.getKind() == SVNNodeKind.DIR) {
-						script.setFileType(FileType.DIR);
-					} else {
-						script.getFileType();
-						script.setFileSize(dirEntry.getSize());
-					}
-					fileEntries.add(script);
-				}
-			});
+					svnRevision, svnRevision, true, recursive, dirEntry -> {
+						FileEntry script = new FileEntry();
+						// Exclude base path "/"
+						if (StringUtils.isBlank(dirEntry.getRelativePath())) {
+							return;
+						}
+						script.setPath(FilenameUtils.normalize(path + "/" + dirEntry.getRelativePath(), true));
+						script.setCreatedDate(dirEntry.getDate());
+						script.setLastModifiedDate(dirEntry.getDate());
+						script.setDescription(dirEntry.getCommitMessage());
+						script.setRevision(dirEntry.getRevision());
+						if (dirEntry.getKind() == SVNNodeKind.DIR) {
+							script.setFileType(FileType.DIR);
+						} else {
+							script.getFileType();
+							script.setFileSize(dirEntry.getSize());
+						}
+						fileEntries.add(script);
+					});
 		} catch (Exception e) {
 			LOG.debug("findAll() to the not existing folder {}", path);
 		} finally {
@@ -173,25 +169,22 @@ public class FileEntryRepository {
 		SVNClientManager svnClientManager = getSVNClientManager();
 		try {
 			svnClientManager.getLogClient().doList(SVNURL.fromFile(getUserRepoDirectory(user)), SVNRevision.HEAD,
-					SVNRevision.HEAD, false, true, new ISVNDirEntryHandler() {
-				@Override
-				public void handleDirEntry(SVNDirEntry dirEntry) throws SVNException {
-					FileEntry script = new FileEntry();
-					String relativePath = dirEntry.getRelativePath();
-					if (StringUtils.isBlank(relativePath)) {
-						return;
-					}
-					script.setCreatedDate(dirEntry.getDate());
-					script.setLastModifiedDate(dirEntry.getDate());
-					script.setPath(relativePath);
-					script.setDescription(dirEntry.getCommitMessage());
-					long reversion = dirEntry.getRevision();
-					script.setRevision(reversion);
-					script.setFileType(dirEntry.getKind() == SVNNodeKind.DIR ? FileType.DIR : null);
-					script.setFileSize(dirEntry.getSize());
-					scripts.add(script);
-				}
-			});
+					SVNRevision.HEAD, false, true, dirEntry -> {
+						FileEntry script = new FileEntry();
+						String relativePath = dirEntry.getRelativePath();
+						if (StringUtils.isBlank(relativePath)) {
+							return;
+						}
+						script.setCreatedDate(dirEntry.getDate());
+						script.setLastModifiedDate(dirEntry.getDate());
+						script.setPath(relativePath);
+						script.setDescription(dirEntry.getCommitMessage());
+						long reversion = dirEntry.getRevision();
+						script.setRevision(reversion);
+						script.setFileType(dirEntry.getKind() == SVNNodeKind.DIR ? FileType.DIR : null);
+						script.setFileSize(dirEntry.getSize());
+						scripts.add(script);
+					});
 		} catch (Exception e) {
 			LOG.error("Error while fetching files from SVN for {}", user.getUserId());
 			LOG.debug("Error details :", e);

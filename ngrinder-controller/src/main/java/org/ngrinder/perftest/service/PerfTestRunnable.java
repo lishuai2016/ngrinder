@@ -17,7 +17,6 @@ import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.grinder.SingleConsole;
-import net.grinder.SingleConsole.ConsoleShutdownListener;
 import net.grinder.StopReason;
 import net.grinder.common.GrinderProperties;
 import net.grinder.console.model.ConsoleProperties;
@@ -395,12 +394,9 @@ public class PerfTestRunnable implements ControllerConstants {
 		// Run test
 		perfTestService.markStatusAndProgress(perfTest, START_TESTING, "The test is ready to start.");
 		// Add listener to detect abnormal condition and mark the perfTest
-		singleConsole.addListener(new ConsoleShutdownListener() {
-			@Override
-			public void readyToStop(StopReason stopReason) {
-				perfTestService.markAbnormalTermination(perfTest, stopReason);
-				LOG.error("Abnormal test {} due to {}", perfTest.getId(), stopReason.name());
-			}
+		singleConsole.addListener(stopReason -> {
+			perfTestService.markAbnormalTermination(perfTest, stopReason);
+			LOG.error("Abnormal test {} due to {}", perfTest.getId(), stopReason.name());
 		});
 		long startTime = singleConsole.startTest(grinderProperties);
 		perfTest.setStartTime(new Date(startTime));
